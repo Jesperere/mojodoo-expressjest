@@ -1,0 +1,25 @@
+GET http://localhost:8081/db/test/users
+
+####
+
+GET http://localhost:8081/db/test/users/"63198dd1ab2e31600dca868e"
+
+###
+
+// funkar inte atm som den ska 
+POST http://localhost:8081/db/test/users
+
+{
+    "firstName": "Connie",
+    "lastName": "Liang",
+    "age": 27,
+    "sex": "female",
+    "email": "sdadad.@email.com",
+    "phoneNumbeR": "+4620311313-312",
+    "adress": "sdaas 3A",
+    "role": "user"
+}
+
+###
+
+

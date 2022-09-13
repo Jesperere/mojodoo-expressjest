@@ -2,13 +2,6 @@ import request from "supertest";
 import app from "../index.mjs";
 import crypto from "crypto";
 
-const users = [];
-
-app.get("/users", (req, res) => {
-  return res.status(200).json({
-    data: users,
-  });
-});
 
 describe("GET /users", () => {
   const newUser = {
@@ -41,19 +34,3 @@ describe("GET /users", () => {
   });
 });
 
-app.post("/users", (req, res) => {
-  try {
-    const { ...req } = req.body;
-    const newUser = { ...req };
-    users.push(newUser);
-    return res.status(201).json({
-      data: users,
-      error: null,
-    });
-  } catch (error) {
-    return res.status(500).json({
-      data: null,
-      error: error,
-    });
-  }
-});

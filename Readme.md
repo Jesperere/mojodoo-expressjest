@@ -1,9 +1,13 @@
-# LEARN MARKDOWN
-## #1. 
-## #2. 
-## #3. 
-## #4. 
-## #5. 
-## #6. 
-## #7.
+# Setup
 
+install dependencies
+
+```
+npm install
+```
+
+run docker compose
+
+```
+docker compose up
+```

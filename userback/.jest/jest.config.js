@@ -1,1 +1,1 @@
-export const setupFiles = ["<rootDir>/.jest/setEnvVars.mjs"];  
+export const setupFiles = ["userback/.jest/setEnvVars.js"];  

@@ -1,51 +1,65 @@
 import { Router } from 'express';
-import { Connection } from 'mongoose';
-export const router = Router();
-// const User = require('../Users.mjs');
-import {Users} from "../User.mjs"
+import { Users } from "../User.mjs"
+
+
+const router = Router();
+
 
 //getting all
-router.get('/,', async (req, res) => {
+router.get('/', async (req, res) => {
     try {
-        const users = await Users.find(filter = "")
+        const users = await Users.find()
         res.json(users)
-    } catch (err){
-        res.status(500).json({message: err.message})
+    } catch (err) {
+        res.status(404).json({ message: err.message })
     }
 })
+
 //getting one
-router.get('/:id', (req, res) => {
-    res.send(req.params.id)  
+router.get('/:id', async (req, res) => {
+    const users = await Users.findById(req.params.id)
+    if (users) {
+        res.send(users)
+    }
+    else {
+        res.send(404).json({ message: "user not found" })
+    }
 })
+
 //creating one
-router.post('/,', async (req, res) => {
-    const user = new Users({
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        age: req.body.age,
-        sex: req.body.sex,
-        email: req.body.sex,
-        phoneMumber: req.body.phoneMumber,
-        adress: req.body.adress,
-        role: req.body.role
-    })
+router.post('/', async (req, res) => {
+    const user = new Users({...req.body})
     try {
         const newUser = await user.save()
         res.status(201).json(newUser)
-    } catch (err){
-        res.status(400).json({message: err.message})
+    } catch (err) {
+        res.status(400).json({ message: err.message })
     }
 
 })
+
 //updating one
-router.patch('/:id', ( req, res) => {
+router.patch('/:id', async (req, res) => {
+    try {
+        const updatedUser = await Users.updateOne(
+            { _id: req.params.id },
+            { $set: { firstName: "bardiatest" } });
+        res.status(200)
+    } catch {
+        res.status(404).json({ message: "no user at this id" })
+    }
 
 })
+
 //deleting one
-router.delete('/:id,', (req, res) => {
+router.delete('/:id', async (req, res) => {
+    try {
+        await Users.findByIdAndDelete(req.params.id)
+        res.status(200)
+    } catch {
+        res.status(404).json({ message: "no user with this id" })
+    }
 
 })
 
-
-
-
+export { router };

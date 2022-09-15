@@ -16,19 +16,18 @@ app.get("/", (req, res) => {
 })
 
 app.use(express.json())
-
 app.use('/users', router)
-
 
 const mongoStart = async () => {
     console.log("Connecting...", process.env.MONGO_URL);
-    await mongoose.connect(process.env.MONGO_URL)
+    mongoose.connect(process.env.MONGO_URL) // tog bort await
     app.listen(port, () => console.log("listening on port " + port))
     console.log("Connected!", process.env.MONGO_URL);
 }
 
 mongoStart().then(() => console.log("Finished"))
-console.log("mongo");
+// console.log("mongo");
+
 
 export default app
 

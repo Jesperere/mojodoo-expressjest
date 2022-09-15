@@ -1,6 +1,7 @@
 import request from "supertest";
 import app from "../index.mjs";
 import crypto from "crypto";
+import mongoose from "mongoose";
 
 
 describe("GET /users", () => {
@@ -17,20 +18,22 @@ describe("GET /users", () => {
   };
   beforeAll(async () => {
     await request(app).post("/users").send(newUser);
-    console.log(newUser);
-    console.log(process.env.MONGO_URL);
+    // console.log(newUser);
+    // console.log(process.env.MONGO_URL);
+
   });
   afterAll(async () => {
     await request(app).delete(`/users/${newUser._id}`);
-    console.log(newUser._id);
+    await mongoose.connection.close()
+    // console.log(newUser._id);
   });
-  it("should return 200", async () => {
+  test("should return 200", async () => {
     const response = await request(app).get("/users");
     expect(response.statusCode).toBe(200);
   });
-  it("should return users", async () => {
+  test("should return users", async () => {
     const response = await request(app).get("/users");
-    expect(response.body.length >= 1).toBe(true);
-  });
+    expect(response.body.length >= 1);
+  })
 });
 
